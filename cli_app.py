@@ -21,6 +21,7 @@ if __name__ == "__main__":
         print("Human:")
         question = input()
         result = qa_chain({"question": question, "chat_history": chat_history})
+        print(result)
         chat_history.append((question, result["answer"]))
         print("AI:")
         print(result["answer"])

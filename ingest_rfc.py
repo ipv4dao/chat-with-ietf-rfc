@@ -91,6 +91,8 @@ download_and_extract_rfcs(rfcs_url, destination_folder)
 #clean the directory from incorrect byte sequences
 #There's two ways of doing this: either you add  errors='ignore' to the open() function, or you remove the files with the invalid byte sequences.
 #As we're only showcasing the use we'll stick to the last option.
+#Uncomment the code below if you're running on full RFC set
+"""
 invalid_byte_sequence = b'\xe9'
 remove_files_with_byte_sequence(destination_folder, invalid_byte_sequence)
 invalid_byte_sequence = b'\xad'
@@ -105,6 +107,7 @@ invalid_byte_sequence = b'\xe6'
 remove_files_with_byte_sequence(destination_folder, invalid_byte_sequence)
 invalid_byte_sequence = b'\x93'
 remove_files_with_byte_sequence(destination_folder, invalid_byte_sequence)
+"""
 #Fixing SSL certificate error if any
 cert_file = certifi.where()
 os.environ["SSL_CERT_FILE"] = cert_file
@@ -113,7 +116,8 @@ nltk.download("punkt")
 #Loading the files
 loader = DirectoryLoader("./rfcs/", glob=file_glob, loader_cls=TextLoader)
 docs = loader.load()
-print(len(docs))
+print("Loaded "+ len(docs) + " RFCs")
+print("Adding RFCs to vectorstore. It may take a while...")
 # Split text
 text_splitter = RecursiveCharacterTextSplitter()
 documents = text_splitter.split_documents(docs)
